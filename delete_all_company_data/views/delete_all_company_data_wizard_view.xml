@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <!-- wizard view -->
+        <record id="view_delete_all_company_data_wizard_form" model="ir.ui.view">
+            <field name="name">delete.all.company.data.wizard.view</field>
+            <field name="model">delete.all.company.data.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Delete all company data wizard">
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="start,checked,done"/>
+                    </header>
+                    <group>
+                        <field name="test"/>
+                        <field name="company_id" options='{"no_create": True}' attrs="{'readonly': [('state', '!=', 'start')], 'required': [('state', 'in', ('start', 'checked'))]}" />
+                        <field name="to_ignore_models" widget="many2many_tags" options='{"no_open": True, "no_create": True}'/>
+                    </group>
+                    <field name="message"/>
+                    <footer class="wizard_footer">
+                        <button name="proceed" string="Proceed" type="object" default_focus="1" class="btn-primary" attrs="{'invisible': [('state', '=', 'done')]}"/>
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- wizard start action -->
+        <record id="action_delete_all_company_data_wizard" model="ir.actions.act_window">
+            <field name="name">Delete all company data wizard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">delete.all.company.data.wizard</field>
+            <field name="view_id" ref="view_delete_all_company_data_wizard_form"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>
